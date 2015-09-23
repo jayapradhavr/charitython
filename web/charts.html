@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="refresh" content="10">
+    <title>Highcharts Example</title>
+</head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="js/jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+       // alert("url set");
+        $.ajax({
+            url:"http://localhost:8080/getstats",
+            type:"GET",
+            headers:{"Accept":"application/json;odata=verbose"},
+            success:function(data){
+                var keys=[];
+                var value=[];
+                for(i in data)
+                    keys.push(i);
+                for(i in keys)
+                    value.push(parseInt(data[keys[i]]));
+                //alert(value);
+                chart = new Highcharts.Chart({
+                    chart: {
+                        renderTo: 'container',
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Item Vs Quantity',
+
+                    },
+                    subtitle: {
+                        text: ''
+
+                    },
+                    xAxis: {
+                        title: {
+                            text: 'Items'
+                        },
+                        categories: keys,
+                        crosshair: true
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Quantity'
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+
+                    series: [{
+                        name: "Target",
+                        data: [10,10]
+                    }, {
+                        name: "Quantity",
+                        data: value
+                    }]
+
+                });
+            },
+            error:function(data){
+                alert(data);
+            }
+        });
+    });
+</script>
+<body>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</body>
+</html>

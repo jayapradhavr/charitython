@@ -1,0 +1,64 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <title>Charity</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/signin.css">
+  <style type="text/css">
+ 
+  </style>
+  </head>
+  <body>
+    <div class="container center">	
+         <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6 panel panel-default">
+            <form action="/login" method="post">
+              <h2 class="form-heading"> Log In</h2>
+              <div class="form-group">
+                      <label for="inputName" class="control-label">User Name</label>
+                      <input type="text" class="form-control" id="inputName" placeholder="User Name" name="inputName" required autofocus>    
+              </div>
+              <div class="form-group">
+                      <label for="inputPassword" class="control-label">Password</label>
+                      <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="inputPassword" required>
+              </div>
+              <button class="form-btn btn-lg btn-primary" type="Submit">Submit</button>
+            </form>
+          </div>
+          <div class="col-md-3"></div>
+     </div>
+    </div>
+  </body>
+  <!--<script src="js/jquery.js"></script>-->
+  <!--<script src="js/bootstrap.min.js"></script>-->
+  <!--<script src="js/cookie.js"></script>-->
+  <!--<script type="text/javascript">-->
+    <!--$(document).ready(function(){-->
+        <!--$('button').on('click',function(e){-->
+                <!--var isStay;-->
+                <!--$('#msg').remove();-->
+                <!--$.ajax({-->
+	            <!--url:"http://localhost:8080/Charity/api/charity",-->
+	            <!--type:"POST",-->
+	            <!--data:$('form').serialize(),-->
+	            <!--success:function(data){-->
+	                 <!--var msg=$('<h4 id="msg" style="color:red" >'+data.Message+'</h4>');-->
+	                 <!--isStay=data.Message;-->
+	                 <!--if(isStay!==undefined)-->
+	                    <!--$('button').after(msg);-->
+	            <!--},-->
+	            <!--error:function(data){	-->
+	            	<!--alert("error");-->
+	            <!--},-->
+	            <!--async:false-->
+			<!--});    	-->
+			<!--if(isStay!==undefined)-->
+			   <!--e.preventDefault();-->
+        <!--});-->
+    <!--});-->
+  <!--</script>-->
+  </html>
+  </html>

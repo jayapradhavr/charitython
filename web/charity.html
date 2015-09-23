@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Charity</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style type="text/css">
+        .center {
+            position: absolute;
+            top: 25%;
+            left: 18%;
+        }
+
+        .form-btn {
+            width: 30%;
+            margin-left: 50%;
+            margin-bottom: 5%;
+        }
+
+        body {
+            background-image: url("resources/charity5.jpg");
+            background-repeat: no-repeat;
+            background-position: center center-fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .error{
+            color:red;
+        }
+
+        h4{
+            font-color:red;
+            text-align:center;
+        }
+        .navbar{
+            background-color: transparent;
+            background: transparent;
+            border-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" style="color:white" href="#">                            Charity</a>
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right ">
+                <li class="active"><a href="#" style="color:white">Main</a></li>
+                <li><a href="index.html" style="color:white">Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container center">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputName" class="control-label col-md-4">Name</label>
+
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="inputName" placeholder="Name" name="inputName"
+                               required autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail" class="control-label col-md-4">Corp ID</label>
+
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="inputEmail" placeholder="Corp ID" name="inputEmail"
+                               required>
+                    </div>
+                </div>
+                <!--<div class="form-group">-->
+                    <!--<label for="inputEmpId" class="control-label col-md-4">Employee Id</label>-->
+
+                    <!--<div class="col-md-8">-->
+                        <!--<input type="text" class="form-control" id="inputEmpId" placeholder="Employee Id"-->
+                               <!--name="inputEmpId" required>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label for="inputContactNumber" class="control-label col-md-4">Contact Number</label>-->
+
+                    <!--<div class="col-md-8">-->
+                        <!--<input type="text" class="form-control" id="inputContactNumber" placeholder="Contact Number" name="inputContactNumber" required>-->
+                        <!--<span class="error" id="ContactError"></span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="form-group">
+                    <label for="inputProduct" class="control-label col-md-4">Product</label>
+
+                    <div class="col-md-8">
+                        <select class="form-control" id="inputProduct" name="inputProduct" required>
+                            <option>Select an option</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputQty" class="control-label col-md-4">Quantity</label>
+
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="inputQty" placeholder="Quantity" name="inputQty" required><span class="error" id="QtyError"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="inputMetrics" placeholder="Metrics"
+                               name="inputMetrics" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPrice" class="control-label col-md-4">Price</label>
+
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="inputPrice" placeholder="Price" name="inputPrice">
+                    </div>
+                </div>
+                <button class="form-btn btn-lg btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+</body>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:8080/availableitems",
+            type: "GET",
+            headers: {"Accept": "application/json;odata=verbose"},
+            success: function (data) {
+                //data = JSON.parse(data);
+                for (var i in data.Products) {
+                    //alert(data.Products);
+                    var item = $('<option data-price=' + data.Products[i].Price + ' data-metrics=' + data.Products[i].Unit + ' >' + data.Products[i].Name + '</option>');
+                    $('#inputProduct').append(item);
+                }
+            },
+            error: function (data) {
+                alert("error");
+            },
+            async: false
+        });
+
+        $('#inputProduct').on('change', function () {
+            $('#inputQty').val("");
+            $('#inputPrice').val("");
+            var price = $('option:selected', this).data('price');
+            var metrics = $('option:selected', this).data('metrics');
+            var string = price + "/" + metrics;
+            $('#inputMetrics').val(string);
+        });
+        $('#inputQty').on('keyup', function () {
+            var price = $('option:selected', '#inputProduct').data('price');
+            var qty = $('#inputQty').val();
+            $('#inputPrice').val(price * qty);
+        });
+
+
+        $("#inputContactNumber").on('keydown',function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                $("#ContactError").html("Please enter valid Contact Number").show().fadeOut(2000);
+                return false;
+            }
+        });
+
+        $("#inputQty").on('keydown',function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                $("#QtyError").html("Please enter valid Quantity").show().fadeOut(2000);
+                return false;
+            }
+        });
+
+            $('button').on('click', function () {
+
+                        var formData = new Object();
+                        formData.Name = $("#inputName").val();
+                        formData.Email = $("#inputEmail").val();
+//                        formData.EmpId = $("#inputEmpId").val();
+//                        formData.Contact = $("#inputContactNumber").val();
+                        formData.Product = $('option:selected', '#inputProduct').val();
+                        formData.quantity = $("#inputQty").val();
+                        formData.Unit = $('option:selected', "#inputProduct").data('metrics');
+                alert($('option:selected', "#inputProduct").data('metrics'));
+                        formData.Price = $("#inputPrice").val();
+                        //alert(JSON.stringify(formData));
+                        $.ajax({
+                            url: "http://localhost:8080/newtransaction",
+                            type: "POST",
+                            data: {
+                                loadProds: 1,
+                                Items: JSON.stringify(formData)
+                    },
+                    dataType:"json",
+                    success:function () {
+            }
+
+            ,
+            error:function () {
+                var msg = $('<h3 class="msg">Submission is successful</h3>');
+                $('form').append(msg);
+                $('.msg').fadeOut(2000);
+                //alert("error");
+            }
+            ,
+            async:false
+        });
+
+    });
+
+    })
+    ;
+</script>
+</html>
