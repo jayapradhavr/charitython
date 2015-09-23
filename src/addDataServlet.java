@@ -34,6 +34,10 @@ public class addDataServlet extends HttpServlet {
      //   System.out.println("empid-"+empid+" name-"+name+" con-"+con+" prod-"+prod+" quantity-"+qu+" unit-"+unit+" price-"+price+" email-"+email);
 //        databaseHandler.createNewTransaction("empid", "lsdkfj", "lsjkf", "lsdjf", 1, "KG", 1000, "sldlfkj");
         databaseHandler.createNewTransaction(name, prod, qu, unit, price, email);
+
+        System.out.println("Done with db mgmt");
+        MailUtil sendMailUtil  = new MailUtil();
+        sendMailUtil.sendMail(email, name, prod, unit, qu, price);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

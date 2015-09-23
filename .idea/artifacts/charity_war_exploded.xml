@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="charity:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/charity_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="charity" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mysql-connector" />
+          <element id="library" level="project" name="json" />
+          <element id="library" level="project" name="mail-1.4" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="charity/web/Web" />
+    </root>
+  </artifact>
+</component>
